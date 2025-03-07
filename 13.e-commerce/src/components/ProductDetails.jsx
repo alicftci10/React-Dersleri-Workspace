@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { setSelectedProduct } from '../redux/slices/productSlice';
 import { CiCircleMinus, CiCirclePlus } from 'react-icons/ci';
+import { addToBasket, calculateBasket } from '../redux/slices/basketSlice';
 
 function ProductDetails() {
 
@@ -21,6 +22,15 @@ function ProductDetails() {
 
     const decrement = () => {
         setCount(count - 1)
+    }
+
+    const addBasket = () => {
+        const payload = {
+            id, price, image, title, description, count
+        }
+
+        dispatch(addToBasket(payload))
+        dispatch(calculateBasket())
     }
 
     useEffect(() => {
@@ -51,14 +61,16 @@ function ProductDetails() {
                 </div>
 
                 <div>
-                    <button style={{
-                        marginTop: '25px',
-                        border: 'none',
-                        padding: '10px',
-                        backgroundColor: 'rgb(185,76,76)',
-                        color: '#fff',
-                        borderRadius: '5px'
-                    }}>Sepete Ekle</button>
+                    <button
+                        onClick={addBasket}
+                        style={{
+                            marginTop: '25px',
+                            border: 'none',
+                            padding: '10px',
+                            backgroundColor: 'rgb(185,76,76)',
+                            color: '#fff',
+                            borderRadius: '5px'
+                        }}>Sepete Ekle</button>
                 </div>
             </div>
         </div>
